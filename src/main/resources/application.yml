@@ -1,0 +1,19 @@
+server:
+  port: 9002
+
+hermes:
+  userServiceUrl: ${USER_SERVICE_URL:http://localhost:8080}
+  userServiceAPIKey: ${USER_SERVICE_API_KEY:a6005e93-acfe-411b-8dbd-96a95e158e75}
+
+management:
+  security:
+    enabled: false
+
+spring:
+  data:
+    mongodb:
+      database: hermes
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      write-dates-as-timestamps: true
