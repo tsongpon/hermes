@@ -9,18 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.time.LocalDateTime
 
 @Service
-class PlaceService @Autowired constructor(private val repository: PlaceRepository) {
+class PlaceService @Autowired constructor(private val repository: PlaceRepository,
+                                          private val friendPickService: FriendPickService) {
 
     private val logger: Logger = LoggerFactory.getLogger(PlaceService::class.java)
 
-    fun savePlace(place: Place): Mono<Place> {
-        logger.debug("Saving place for userId {}", place.userId)
-        val placeFromDb = repository.getPlaceBy(place.userId!!, place.placeId!!)
-        return placeFromDb.map({ it ->
-            merge(it, place)
-        }).flatMap({ repository.savePlace(it) }).switchIfEmpty(repository.savePlace(place))
+    fun savePlace(placeToSave: Place): Mono<Place> {
+        logger.debug("Saving place for userId {}", placeToSave.userId)
+        return repository.getPlaceBy(placeToSave.userId!!, placeToSave.placeId!!)
+                .defaultIfEmpty(placeToSave)
+                .map { merge(it, placeToSave) }
+                .flatMap { repository.savePlace(it) }
+                .map { populateFriendPick(it, it.updateTime!!, it.type!!) }
     }
 
     fun listPlaces(query: PlaceQuery): Flux<Place> {
@@ -38,14 +41,33 @@ class PlaceService @Autowired constructor(private val repository: PlaceRepositor
         return repository.countPlaces(query)
     }
 
-    fun deletePlace(id: String): Mono<Boolean> {
-        return repository.deletePlace(id)
+    fun deletePlace(userId: String, id: String): Mono<Boolean> {
+        return repository.getPlace(id).flatMap {
+            friendPickService.unPopulateFriendPick(it.userId!!, it.placeId!!)
+            repository.deletePlace(it.id!!)
+        }
+//        return repository.deletePlace(id)
     }
 
     private fun merge(placeFromDb: Place, toBeMerge: Place): Place {
+        logger.debug("Merging")
         toBeMerge.id = placeFromDb.id
         toBeMerge.createTime = placeFromDb.createTime
 
         return toBeMerge
     }
+
+    private fun populateFriendPick(place: Place, time: LocalDateTime, type: String): Place {
+        friendPickService.populateFriendPick(pickerUserId = place.userId!!,
+                placeId = place.placeId!!, pickTime = time, source = type)
+        logger.debug("Populating friendpick")
+        return place
+    }
+
+    private fun unPopulateFriendPick(place: Place): Place {
+        friendPickService.unPopulateFriendPick(place.userId!!, place.placeId!!)
+        logger.debug("Populating friendpick")
+        return place
+    }
+
 }

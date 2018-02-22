@@ -7,7 +7,4 @@ interface UserRepository {
 
     fun getUser(userId: String): Mono<User>
 
-    fun save(user: User): Mono<User>
-
-    fun getUserFromRemote(userId: String): Mono<User>
 }

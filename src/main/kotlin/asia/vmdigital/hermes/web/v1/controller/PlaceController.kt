@@ -34,7 +34,7 @@ class PlaceController @Autowired constructor(private val placeService: PlaceServ
                   @RequestParam(defaultValue = "30") size: Int,
                   @RequestParam(defaultValue = "1") page: Int): Mono<ResponseTransportWrapper<PlaceTransport>> {
 
-        logger.debug("Listing user saved")
+        logger.debug("Listing user place")
         val query = PlaceQuery(userId = userId, size = size, start = size * (page - 1))
         val countMono = placeService.countPlace(query)
         val responseMono = placeService.listPlaces(query).map({
@@ -57,6 +57,7 @@ class PlaceController @Autowired constructor(private val placeService: PlaceServ
     fun savePlace(@RequestBody transport: Mono<PlaceTransport>,
                   @PathVariable("userId") userId: String): Mono<ResponseEntity<PlaceTransport>> {
 
+        transport.map {  }
         return transport.flatMap({
             logger.debug("Getting request to save place {}", it)
             it.userId = userId
@@ -66,8 +67,9 @@ class PlaceController @Autowired constructor(private val placeService: PlaceServ
     }
 
     @DeleteMapping("/user/{userId}/saved/{id}")
-    fun delete(@PathVariable("id")id: String): Mono<ResponseEntity<Void>> {
-        return placeService.deletePlace(id).map { deleted ->
+    fun delete(@PathVariable("userId")userId: String,
+               @PathVariable("id")id: String): Mono<ResponseEntity<Void>> {
+        return placeService.deletePlace(userId, id).map { deleted ->
             if(deleted) {
                 ResponseEntity.ok().build<Void>()
             } else {

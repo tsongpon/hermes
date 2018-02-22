@@ -1,8 +1,8 @@
 package asia.vmdigital.hermes.repository
 
 import asia.vmdigital.hermes.component.AppProperties
+import asia.vmdigital.hermes.domain.Follower
 import asia.vmdigital.hermes.domain.User
-import asia.vmdigital.hermes.domain.UserContact
 import asia.vmdigital.hermes.transport.ContactsTransport
 import asia.vmdigital.hermes.transport.UserTransport
 import org.slf4j.Logger
@@ -28,13 +28,12 @@ class UserRepositoryImpl(private val mongo: ReactiveMongoTemplate,
                 .switchIfEmpty(getUserFromRemote(userId))
     }
 
-    override fun save(user: User): Mono<User> {
+    private fun save(user: User): Mono<User> {
         logger.debug("Saving user {}", user)
         return mongo.save(user)
     }
 
-    override fun getUserFromRemote(userId: String): Mono<User> {
-        logger.debug("Getting user from remote")
+    private fun getUserFromRemote(userId: String): Mono<User> {
         val userServiceApi = appProp.userServiceUrl
         val userServiceApiKey = appProp.userServiceAPIKey
         val authorizationValue = "Bearer $userServiceApiKey"
@@ -46,30 +45,27 @@ class UserRepositoryImpl(private val mongo: ReactiveMongoTemplate,
 
         logger.debug("Getting user data id {}", userId)
         val userFromRemote = webClient.get().uri("/accounts/v1/users/$userId")
-                .retrieve().bodyToMono(UserTransport::class.java)
+                .retrieve().bodyToMono(UserTransport::class.java).log("Getting user $userId from remote")
 
         logger.debug("Getting user contact user id {}", userId)
-        val contactsFromRemote = webClient.get().uri("/accounts/v1/users/$userId/contacts")
+        val followersFromRemote = webClient.get().uri("/accounts/v1/users/$userId/contactowners")
                 .retrieve().bodyToMono(ContactsTransport::class.java)
 
-        val userMono = Mono.zip(userFromRemote, contactsFromRemote).map { populateToUser(it.t1, it.t2) }
-        userMono.subscribe {it ->
-            save(it).block()
-        }
-
-        return userMono
+        return Mono.zip(userFromRemote, followersFromRemote)
+                .map { mapToUser(it.t1, it.t2) }
+                .map { save(it) }.flatMap { it }
     }
 
-    private fun populateToUser(userTransport: UserTransport, contacts: ContactsTransport): User {
+    private fun mapToUser(userTransport: UserTransport, contacts: ContactsTransport): User {
         val user = mapUserField(userTransport)
-        val contactsList: ArrayList<UserContact> = ArrayList()
+        val followerList: ArrayList<Follower> = ArrayList()
         contacts.contacts.forEach({it ->
-            val contact = UserContact()
+            val contact = Follower()
             contact.id = it.id
             contact.profileName = it.profileName
             contact.profilePhoto = it.profilePhoto
-            contactsList.add(contact)
-            user.contacts = contactsList
+            followerList.add(contact)
+            user.followers = followerList
         })
 
         return user
