@@ -14,9 +14,14 @@ class FriendPickTransportMapper {
             transport.userId = friendPick.userId
             transport.placeId = friendPick.placeId
             transport.type = friendPick.source
+            transport.categories = friendPick.categories
             transport.createTime = Utils.localDateTimeToDate(friendPick.createTime)
             transport.saveTime = Utils.localDateTimeToDate(friendPick.updateTime)
             transport.friends = friendPick.pickers.map { map(it) }
+            if (friendPick.location != null) {
+                transport.lon = friendPick.location!!.x
+                transport.lat = friendPick.location!!.y
+            }
 
             return transport
         }
@@ -26,6 +31,7 @@ class FriendPickTransportMapper {
             transport.friendId = picker.userId
             transport.profileName = picker.profileName
             transport.profilePhoto = picker.profilePhoto
+            transport.pickTime = Utils.localDateTimeToDate(picker.pickTime)
 
             return transport
         }

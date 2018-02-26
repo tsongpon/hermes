@@ -10,6 +10,9 @@ management:
     enabled: false
 
 spring:
+  kafka:
+    packages:
+      trust-all: true
   data:
     mongodb:
       database: hermes
@@ -17,3 +20,8 @@ spring:
     property-naming-strategy: SNAKE_CASE
     serialization:
       write-dates-as-timestamps: true
+
+kafka:
+  bootstrap-servers: localhost:9092
+  topic:
+    userServiceContactUpdate: userServiceContactUpdate

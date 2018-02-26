@@ -28,6 +28,12 @@ class UserRepositoryImpl(private val mongo: ReactiveMongoTemplate,
                 .switchIfEmpty(getUserFromRemote(userId))
     }
 
+    override fun deleteUser(userId: String): Mono<Boolean> {
+        logger.debug("deleting user {}", userId)
+        return mongo.remove(Query.query(Criteria.where("_id").`is`(userId)), User::class.java)
+                .map { it.wasAcknowledged() }
+    }
+
     private fun save(user: User): Mono<User> {
         logger.debug("Saving user {}", user)
         return mongo.save(user)

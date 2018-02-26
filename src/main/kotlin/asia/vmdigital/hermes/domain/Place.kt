@@ -15,6 +15,7 @@ data class Place(@Id
                  var userId: String? = null,
                  var placeId: String? = null,
                  var type: String? = null,
+                 var categories: ArrayList<String> = ArrayList(),
                  var createTime: LocalDateTime? = null,
                  var updateTime: LocalDateTime? = null,
                  @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)

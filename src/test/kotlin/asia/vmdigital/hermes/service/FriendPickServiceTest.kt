@@ -3,6 +3,7 @@ package asia.vmdigital.hermes.service
 import asia.vmdigital.hermes.domain.Follower
 import asia.vmdigital.hermes.domain.FriendPick
 import asia.vmdigital.hermes.domain.Picker
+import asia.vmdigital.hermes.domain.Place
 import asia.vmdigital.hermes.domain.User
 import asia.vmdigital.hermes.repository.FriendPickRepositoryMongoReactiveImpl
 import asia.vmdigital.hermes.repository.UserRepository
@@ -55,7 +56,7 @@ class FriendPickServiceTest {
         `when`(mockFriendPickRepository.getFriendPickBy("fl-1", "place-1")).thenReturn(Mono.empty())
         `when`(mockFriendPickRepository.saveFriendPick(friendPickFl1)).thenReturn(Mono.just(savedFriendPick))
 
-        friendPickService.populateFriendPick("user-1", "place-1", pickTime, "Google")
+        friendPickService.populateFriendPick("user-1", Place(placeId = "place-1"), pickTime, "Google")
 
         verify(mockUserRepository, times(1)).getUser("user-1")
         verify(mockFriendPickRepository, times(1)).saveFriendPick(friendPickFl1)
@@ -100,7 +101,7 @@ class FriendPickServiceTest {
                 .thenReturn(Mono.just(existingFriendPick))
         `when`(mockFriendPickRepository.saveFriendPick(updatedFriendPick)).thenReturn(Mono.just(savedFriendPick))
 
-        friendPickService.populateFriendPick("user-1", "place-1", pickTime, "Google")
+        friendPickService.populateFriendPick("user-1", Place(placeId = "place-1"), pickTime, "Google")
 
         verify(mockUserRepository, times(1)).getUser("user-1")
         verify(mockFriendPickRepository, times(1)).saveFriendPick(updatedFriendPick)

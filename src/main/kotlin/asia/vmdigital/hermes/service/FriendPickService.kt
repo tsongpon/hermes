@@ -1,8 +1,8 @@
 package asia.vmdigital.hermes.service
 
-import asia.vmdigital.hermes.domain.Follower
 import asia.vmdigital.hermes.domain.FriendPick
 import asia.vmdigital.hermes.domain.Picker
+import asia.vmdigital.hermes.domain.Place
 import asia.vmdigital.hermes.domain.User
 import asia.vmdigital.hermes.query.FriendPickQuery
 import asia.vmdigital.hermes.repository.FriendPickRepository
@@ -22,19 +22,32 @@ class FriendPickService(private val friendPickRepository: FriendPickRepository,
     private val logger: Logger = LoggerFactory.getLogger(FriendPickService::class.java)
 
     @Async
-    fun populateFriendPick(pickerUserId: String, placeId: String, pickTime: LocalDateTime, source: String) {
-        logger.debug("Populating friendPick picker {}, placeId {}", pickerUserId, placeId)
+    fun populateFriendPick(pickerUserId: String, place: Place, pickTime: LocalDateTime, source: String) {
+        logger.debug("Populating friendPick picker {}, placeId {}", pickerUserId, place.placeId)
         val pickerUser = userRepository.getUser(pickerUserId).block()
         val targetUsers = pickerUser!!.followers
         logger.debug("Get target user {}", targetUsers!!.size)
         targetUsers.forEach {
-            val friendPickFromDb = friendPickRepository.getFriendPickBy(it.id!!, placeId).block()
+            val friendPickFromDb = friendPickRepository.getFriendPickBy(it.id!!, place.placeId!!).block()
             if (friendPickFromDb == null) {
-                createNewFriendPick(pickerUser, placeId, it, pickTime, source)
+                createNewFriendPick(pickerUser, place, it.id!!)
             } else {
                 logger.debug("Update existing friendPick")
                 updateFriendPick(pickerUser, friendPickFromDb)
             }
+        }
+    }
+
+    @Async
+    fun populateFriendPickForSpecificUser(pickerUserId: String, place: Place, targetUser: String) {
+        logger.debug("Populating friendPick picker {}, placeId {}", pickerUserId, place.placeId)
+        val pickerUser = userRepository.getUser(pickerUserId).block()
+        val friendPickFromDb = friendPickRepository.getFriendPickBy(targetUser, place.placeId!!).block()
+        if (friendPickFromDb == null) {
+            createNewFriendPick(pickerUser!!, place, targetUser)
+        } else {
+            logger.debug("Update existing friendPick")
+            updateFriendPick(pickerUser!!, friendPickFromDb)
         }
     }
 
@@ -81,18 +94,19 @@ class FriendPickService(private val friendPickRepository: FriendPickRepository,
         friendPickRepository.saveFriendPick(existingFriendPick).block()
     }
 
-    private fun createNewFriendPick(pickerUser: User, placeId: String,
-                                    follower: Follower, pickTime: LocalDateTime, source: String) {
+    private fun createNewFriendPick(pickerUser: User, place: Place, followerId: String) {
         logger.debug("New friendPick")
         val newFriendPick = FriendPick()
-        newFriendPick.userId = follower.id
-        newFriendPick.placeId = placeId
-        newFriendPick.source = source
+        newFriendPick.userId = followerId
+        newFriendPick.placeId = place.placeId
+        newFriendPick.source = place.type
+        newFriendPick.categories = place.categories
+        newFriendPick.location = place.location
 
         val picker = Picker(userId = pickerUser.id,
                 profileName = pickerUser.profileName,
                 profilePhoto = pickerUser.profilePhoto,
-                pickTime = pickTime)
+                pickTime = place.updateTime)
         newFriendPick.pickers.add(picker)
 
         friendPickRepository.saveFriendPick(newFriendPick).block()

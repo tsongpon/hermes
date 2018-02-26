@@ -52,7 +52,7 @@ class PlaceServiceTest {
         Mockito.verify(placeRepository, times(1)).getPlaceBy("user-1", "place-1")
         Mockito.verify(placeRepository, times(1)).savePlace(placeToSave)
         Mockito.verify(friendPickService, times(1))
-                .populateFriendPick("user-1", "place-1", savedPlace.updateTime!!, "Google")
+                .populateFriendPick("user-1", savedPlace, savedPlace.updateTime!!, "Google")
     }
 
     @Test
@@ -102,7 +102,7 @@ class PlaceServiceTest {
         verify(placeRepository, times(1)).getPlaceBy("user-1", "place-1")
         verify(placeRepository, times(1)).savePlace(mergedPlace)
         verify(friendPickService, times(1))
-                .populateFriendPick("user-1", "place-1", savedPlace.updateTime!!, "Google")
+                .populateFriendPick("user-1", savedPlace, savedPlace.updateTime!!, "Google")
     }
 
     @Test

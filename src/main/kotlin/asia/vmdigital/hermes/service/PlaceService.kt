@@ -46,7 +46,6 @@ class PlaceService @Autowired constructor(private val repository: PlaceRepositor
             friendPickService.unPopulateFriendPick(it.userId!!, it.placeId!!)
             repository.deletePlace(it.id!!)
         }
-//        return repository.deletePlace(id)
     }
 
     private fun merge(placeFromDb: Place, toBeMerge: Place): Place {
@@ -59,15 +58,8 @@ class PlaceService @Autowired constructor(private val repository: PlaceRepositor
 
     private fun populateFriendPick(place: Place, time: LocalDateTime, type: String): Place {
         friendPickService.populateFriendPick(pickerUserId = place.userId!!,
-                placeId = place.placeId!!, pickTime = time, source = type)
+                place = place, pickTime = time, source = type)
         logger.debug("Populating friendpick")
         return place
     }
-
-    private fun unPopulateFriendPick(place: Place): Place {
-        friendPickService.unPopulateFriendPick(place.userId!!, place.placeId!!)
-        logger.debug("Populating friendpick")
-        return place
-    }
-
 }

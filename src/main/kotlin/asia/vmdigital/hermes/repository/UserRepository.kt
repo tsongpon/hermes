@@ -7,4 +7,5 @@ interface UserRepository {
 
     fun getUser(userId: String): Mono<User>
 
+    fun deleteUser(userId: String): Mono<Boolean>
 }
