@@ -15,7 +15,11 @@ spring:
       trust-all: true
   data:
     mongodb:
+      host: ${MONGODB_HOST:localhost}
+      authentication-database: hermes
       database: hermes
+      username: hermes
+      password: ${MONGODB_PASSWORD:pingu123}
   jackson:
     property-naming-strategy: SNAKE_CASE
     serialization:
