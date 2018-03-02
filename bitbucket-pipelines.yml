@@ -8,9 +8,19 @@ image: java:8
 pipelines:
   default:
     - step:
+        name: Build and unit testing
         caches:
           - gradle
         script: # Modify the commands below to build your repository.
           # You must commit the Gradle wrapper to your repository
           # https://docs.gradle.org/current/userguide/gradle_wrapper.html
           - bash ./gradlew build
+    - step:
+        name: Upload to s3
+        script:
+          - apt-get update
+          - apt-get install -y python-dev
+          - curl -O https://bootstrap.pypa.io/get-pip.py
+          - python get-pip.py
+          - pip install awscli
+          - aws deploy push --application-name $APPLICATION_NAME --s3-location s3://$S3_BUCKET/hermes_$BITBUCKET_BUILD_NUMBER --ignore-hidden-files
