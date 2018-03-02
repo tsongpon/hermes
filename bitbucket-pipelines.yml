@@ -15,7 +15,7 @@ pipelines:
           # You must commit the Gradle wrapper to your repository
           # https://docs.gradle.org/current/userguide/gradle_wrapper.html
           - apt-get update
-          - apt-get install -y python-dev zip unzip
+          - apt-get install -y python-dev zip
           - git config --global user.email "deploy@vm-digital.asia"
           - git config --global user.name "Deploy Vmd"
           - bash ./gradlew release -Prelease.useAutomaticVersion=true

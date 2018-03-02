@@ -29,7 +29,7 @@ def upload_to_s3(artifact):
     with open('version.txt', 'r') as myfile:
         version_number=myfile.read().replace('\n', '')
     try:
-        bucket_key = BASE_BUCKET_KEY + '-' + version_number
+        bucket_key = BASE_BUCKET_KEY + '-' + version_number + '.zip'
         print("Upload hermes version : ", bucket_key)
         client = boto3.client('s3')
     except ClientError as err:
