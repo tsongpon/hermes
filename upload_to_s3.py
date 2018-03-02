@@ -30,8 +30,11 @@ def upload_to_s3(artifact):
     """
     Uploads an artifact to Amazon S3
     """
+    with open('version.txt', 'r') as myfile:
+        version_number=myfile.read().replace('\n', '')
     try:
         print("Uploading hermes build number : ", BUILD_NUMBER)
+        print("Deploying hermes version : ", version_number)
         client = boto3.client('s3')
     except ClientError as err:
         print("Failed to create boto3 client.\n" + str(err))

@@ -20,8 +20,7 @@ pipelines:
           - python get-pip.py
           - pip install boto3==1.3.0
           - pip install awscli
-          - bash ./gradlew build
-          - pwd
-          - ls
+          - bash ./gradlew release -Prelease.useAutomaticVersion=true
+          - git describe --tags $(git rev-list --tags --max-count=1) >> version.txt
           - zip -j /tmp/artifact.zip build/libs/* # package up the application for deployment
           - python upload_to_s3.py # run the deployment script
