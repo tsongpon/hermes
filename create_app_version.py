@@ -24,31 +24,7 @@ from botocore.exceptions import ClientError
 VERSION_LABEL = strftime("%Y%m%d%H%M%S")
 BUCKET_KEY = os.getenv('APPLICATION_NAME') + '/' + VERSION_LABEL + \
              '-bitbucket_builds.zip'
-
-def upload_to_s3(artifact):
-    """
-    Uploads an artifact to Amazon S3
-    """
-    try:
-        client = boto3.client('s3')
-    except ClientError as err:
-        print("Failed to create boto3 client.\n" + str(err))
-        return False
-
-    try:
-        client.put_object(
-            Body=open(artifact, 'rb'),
-            Bucket=os.getenv('S3_BUCKET'),
-            Key=BUCKET_KEY
-        )
-    except ClientError as err:
-        print("Failed to upload artifact to S3.\n" + str(err))
-        return False
-    except IOError as err:
-        print("Failed to access artifact.zip in this directory.\n" + str(err))
-        return False
-
-    return True
+BASE_BUCKET_KEY = os.getenv('APPLICATION_NAME') + '/' + os.getenv('APPLICATION_NAME')
 
 def create_new_version():
     """
@@ -61,13 +37,18 @@ def create_new_version():
         return False
 
     try:
+        with open('version.txt', 'r') as myfile:
+            version_number=myfile.read().replace('\n', '')
+        bucket_key = BASE_BUCKET_KEY + '-' + version_number + '.zip'
+        version_label = 'hermes-' + version_number
+        print('Creating new application version : ', version_label)
         response = client.create_application_version(
             ApplicationName=os.getenv('APPLICATION_NAME'),
-            VersionLabel=VERSION_LABEL,
+            VersionLabel=version_label,
             Description='New build from Bitbucket',
             SourceBundle={
                 'S3Bucket': os.getenv('S3_BUCKET'),
-                'S3Key': BUCKET_KEY
+                'S3Key': bucket_key
             },
             Process=True
         )
@@ -85,39 +66,37 @@ def create_new_version():
         print(str(err))
         return False
 
-def deploy_new_version():
-    """
-    Deploy a new version to AWS Elastic Beanstalk
-    """
-    try:
-        client = boto3.client('elasticbeanstalk')
-    except ClientError as err:
-        print("Failed to create boto3 client.\n" + str(err))
-        return False
-
-    try:
-        response = client.update_environment(
-            ApplicationName=os.getenv('APPLICATION_NAME'),
-            EnvironmentName=os.getenv('APPLICATION_ENVIRONMENT'),
-            VersionLabel=VERSION_LABEL,
-        )
-    except ClientError as err:
-        print("Failed to update environment.\n" + str(err))
-        return False
-
-    print(response)
-    return True
+# def deploy_new_version():
+#     """
+#     Deploy a new version to AWS Elastic Beanstalk
+#     """
+#     try:
+#         client = boto3.client('elasticbeanstalk')
+#     except ClientError as err:
+#         print("Failed to create boto3 client.\n" + str(err))
+#         return False
+#
+#     try:
+#         response = client.update_environment(
+#             ApplicationName=os.getenv('APPLICATION_NAME'),
+#             EnvironmentName=os.getenv('APPLICATION_ENVIRONMENT'),
+#             VersionLabel=VERSION_LABEL,
+#         )
+#     except ClientError as err:
+#         print("Failed to update environment.\n" + str(err))
+#         return False
+#
+#     print(response)
+#     return True
 
 def main():
     " Your favorite wrapper's favorite wrapper "
-    # if not upload_to_s3('/tmp/artifact.zip'):
-    #     sys.exit(1)
     if not create_new_version():
         sys.exit(1)
     # Wait for the new version to be consistent before deploying
-    sleep(5)
-    if not deploy_new_version():
-        sys.exit(1)
+    # sleep(5)
+    # if not deploy_new_version():
+    #     sys.exit(1)
 
 if __name__ == "__main__":
     main()

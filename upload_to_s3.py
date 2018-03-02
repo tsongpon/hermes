@@ -51,74 +51,11 @@ def upload_to_s3(artifact):
 
     return True
 
-# def create_new_version():
-#     """
-#     Creates a new application version in AWS Elastic Beanstalk
-#     """
-#     try:
-#         client = boto3.client('elasticbeanstalk')
-#     except ClientError as err:
-#         print("Failed to create boto3 client.\n" + str(err))
-#         return False
-#
-#     try:
-#         response = client.create_application_version(
-#             ApplicationName=os.getenv('APPLICATION_NAME'),
-#             VersionLabel=VERSION_LABEL,
-#             Description='New build from Bitbucket',
-#             SourceBundle={
-#                 'S3Bucket': os.getenv('S3_BUCKET'),
-#                 'S3Key': BUCKET_KEY
-#             },
-#             Process=True
-#         )
-#     except ClientError as err:
-#         print("Failed to create application version.\n" + str(err))
-#         return False
-#
-#     try:
-#         if response['ResponseMetadata']['HTTPStatusCode'] is 200:
-#             return True
-#         else:
-#             print(response)
-#             return False
-#     except (KeyError, TypeError) as err:
-#         print(str(err))
-#         return False
-#
-# def deploy_new_version():
-#     """
-#     Deploy a new version to AWS Elastic Beanstalk
-#     """
-#     try:
-#         client = boto3.client('elasticbeanstalk')
-#     except ClientError as err:
-#         print("Failed to create boto3 client.\n" + str(err))
-#         return False
-#
-#     try:
-#         response = client.update_environment(
-#             ApplicationName=os.getenv('APPLICATION_NAME'),
-#             EnvironmentName=os.getenv('APPLICATION_ENVIRONMENT'),
-#             VersionLabel=VERSION_LABEL,
-#         )
-#     except ClientError as err:
-#         print("Failed to update environment.\n" + str(err))
-#         return False
-#
-#     print(response)
-#     return True
-
 def main():
     " Your favorite wrapper's favorite wrapper "
     if not upload_to_s3('/tmp/artifact.zip'):
         sys.exit(1)
-    # if not create_new_version():
-    #     sys.exit(1)
-    # # Wait for the new version to be consistent before deploying
-    # sleep(5)
-    # if not deploy_new_version():
-    #     sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

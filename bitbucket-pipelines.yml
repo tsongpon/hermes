@@ -26,3 +26,7 @@ pipelines:
           - pip install boto3==1.3.0
           - pip install awscli
           - python upload_to_s3.py # run the deployment script
+    - step:
+        name: Create application version
+        script:
+          - python create_app_version.py
