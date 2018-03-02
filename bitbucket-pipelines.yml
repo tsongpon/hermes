@@ -23,5 +23,5 @@ pipelines:
           - bash ./gradlew build
           - pwd
           - ls
-          - cp build/distributions/* /tmp/artifact.zip # package up the application for deployment
+          - zip -j /tmp/artifact.zip build/libs/* # package up the application for deployment
           - python upload_to_s3.py # run the deployment script
