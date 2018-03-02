@@ -24,12 +24,14 @@ from botocore.exceptions import ClientError
 VERSION_LABEL = strftime("%Y%m%d%H%M%S")
 BUCKET_KEY = os.getenv('APPLICATION_NAME') + '/' + VERSION_LABEL + \
     '-bitbucket_builds.zip'
+BUILD_NUMBER = os.getenv('BITBUCKET_BUILD_NUMBER')
 
 def upload_to_s3(artifact):
     """
     Uploads an artifact to Amazon S3
     """
     try:
+        print("Uploading hermes build number : ", BUILD_NUMBER)
         client = boto3.client('s3')
     except ClientError as err:
         print("Failed to create boto3 client.\n" + str(err))
@@ -50,63 +52,63 @@ def upload_to_s3(artifact):
 
     return True
 
-def create_new_version():
-    """
-    Creates a new application version in AWS Elastic Beanstalk
-    """
-    try:
-        client = boto3.client('elasticbeanstalk')
-    except ClientError as err:
-        print("Failed to create boto3 client.\n" + str(err))
-        return False
-
-    try:
-        response = client.create_application_version(
-            ApplicationName=os.getenv('APPLICATION_NAME'),
-            VersionLabel=VERSION_LABEL,
-            Description='New build from Bitbucket',
-            SourceBundle={
-                'S3Bucket': os.getenv('S3_BUCKET'),
-                'S3Key': BUCKET_KEY
-            },
-            Process=True
-        )
-    except ClientError as err:
-        print("Failed to create application version.\n" + str(err))
-        return False
-
-    try:
-        if response['ResponseMetadata']['HTTPStatusCode'] is 200:
-            return True
-        else:
-            print(response)
-            return False
-    except (KeyError, TypeError) as err:
-        print(str(err))
-        return False
-
-def deploy_new_version():
-    """
-    Deploy a new version to AWS Elastic Beanstalk
-    """
-    try:
-        client = boto3.client('elasticbeanstalk')
-    except ClientError as err:
-        print("Failed to create boto3 client.\n" + str(err))
-        return False
-
-    try:
-        response = client.update_environment(
-            ApplicationName=os.getenv('APPLICATION_NAME'),
-            EnvironmentName=os.getenv('APPLICATION_ENVIRONMENT'),
-            VersionLabel=VERSION_LABEL,
-        )
-    except ClientError as err:
-        print("Failed to update environment.\n" + str(err))
-        return False
-
-    print(response)
-    return True
+# def create_new_version():
+#     """
+#     Creates a new application version in AWS Elastic Beanstalk
+#     """
+#     try:
+#         client = boto3.client('elasticbeanstalk')
+#     except ClientError as err:
+#         print("Failed to create boto3 client.\n" + str(err))
+#         return False
+#
+#     try:
+#         response = client.create_application_version(
+#             ApplicationName=os.getenv('APPLICATION_NAME'),
+#             VersionLabel=VERSION_LABEL,
+#             Description='New build from Bitbucket',
+#             SourceBundle={
+#                 'S3Bucket': os.getenv('S3_BUCKET'),
+#                 'S3Key': BUCKET_KEY
+#             },
+#             Process=True
+#         )
+#     except ClientError as err:
+#         print("Failed to create application version.\n" + str(err))
+#         return False
+#
+#     try:
+#         if response['ResponseMetadata']['HTTPStatusCode'] is 200:
+#             return True
+#         else:
+#             print(response)
+#             return False
+#     except (KeyError, TypeError) as err:
+#         print(str(err))
+#         return False
+#
+# def deploy_new_version():
+#     """
+#     Deploy a new version to AWS Elastic Beanstalk
+#     """
+#     try:
+#         client = boto3.client('elasticbeanstalk')
+#     except ClientError as err:
+#         print("Failed to create boto3 client.\n" + str(err))
+#         return False
+#
+#     try:
+#         response = client.update_environment(
+#             ApplicationName=os.getenv('APPLICATION_NAME'),
+#             EnvironmentName=os.getenv('APPLICATION_ENVIRONMENT'),
+#             VersionLabel=VERSION_LABEL,
+#         )
+#     except ClientError as err:
+#         print("Failed to update environment.\n" + str(err))
+#         return False
+#
+#     print(response)
+#     return True
 
 def main():
     " Your favorite wrapper's favorite wrapper "
