@@ -8,6 +8,8 @@ build
 #gradle.properties
 user-service.iml
 venv/
+postgres-data/
+data/
 
 # Acceptance report and log
 src/test/integration/output/

@@ -1,0 +1,28 @@
+hermes:
+  userServiceUrl: ${USER_SERVICE_URL}
+  userServiceAPIKey: ${USER_SERVICE_API_KEY}
+
+management:
+  security:
+    enabled: false
+
+spring:
+  kafka:
+    packages:
+      trust-all: true
+  data:
+    mongodb:
+      host: ${MONGO_HOST}
+      authentication-database: hermes
+      database: hermes
+      username: hermes
+      password: ${MONGODB_PASSWORD}
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      write-dates-as-timestamps: true
+
+kafka:
+  bootstrap-servers: ${KAFKA_SERVER}
+  topic:
+    userServiceContactUpdate: userServiceContactUpdate

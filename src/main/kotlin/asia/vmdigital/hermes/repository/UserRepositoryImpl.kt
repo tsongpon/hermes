@@ -1,12 +1,12 @@
 package asia.vmdigital.hermes.repository
 
-import asia.vmdigital.hermes.component.AppProperties
 import asia.vmdigital.hermes.domain.Follower
 import asia.vmdigital.hermes.domain.User
 import asia.vmdigital.hermes.transport.ContactsTransport
 import asia.vmdigital.hermes.transport.UserTransport
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
@@ -17,10 +17,15 @@ import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 
 @Repository
-class UserRepositoryImpl(private val mongo: ReactiveMongoTemplate,
-                         private val appProp: AppProperties): UserRepository {
+class UserRepositoryImpl(private val mongo: ReactiveMongoTemplate): UserRepository {
 
     private val logger: Logger = LoggerFactory.getLogger(UserRepositoryImpl::class.java)
+
+    @Value("\${hermes.userServiceUrl}")
+    private var userServiceUrl = ""
+
+    @Value("\${hermes.userServiceAPIKey}")
+    private var userServiceAPIKey = ""
 
     override fun getUser(userId: String): Mono<User> {
         logger.debug("Getting user id {}", userId)
@@ -40,11 +45,11 @@ class UserRepositoryImpl(private val mongo: ReactiveMongoTemplate,
     }
 
     private fun getUserFromRemote(userId: String): Mono<User> {
-        val userServiceApi = appProp.userServiceUrl
-        val userServiceApiKey = appProp.userServiceAPIKey
+        val userServiceApi = userServiceUrl
+        val userServiceApiKey = userServiceAPIKey
         val authorizationValue = "Bearer $userServiceApiKey"
 
-        val webClient = WebClient.builder().baseUrl(userServiceApi!!)
+        val webClient = WebClient.builder().baseUrl(userServiceApi)
                 .defaultHeader("Authorization", authorizationValue)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build()
