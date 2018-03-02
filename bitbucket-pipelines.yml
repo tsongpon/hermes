@@ -23,5 +23,7 @@ pipelines:
           - curl -O https://bootstrap.pypa.io/get-pip.py
           - python get-pip.py
           - pip install awscli
+          - pwd
+          - ls
           - cp build/distributions/* /tmp/artifact.zip # package up the application for deployment
           - python upload_to_s3.py # run the deployment script
