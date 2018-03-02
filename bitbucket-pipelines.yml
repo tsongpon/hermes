@@ -24,6 +24,15 @@ pipelines:
           - curl -O https://bootstrap.pypa.io/get-pip.py
           - python get-pip.py
           - pip install boto3==1.3.0
-          - pip install awscli
-          - python upload_to_s3.py # run the deployment script
-          - python create_app_version.py
+          - python aws_deploy/upload_to_s3.py # run the deployment script
+          - python aws_deploy/create_app_version.py
+    - step:
+        name: Deploy Dev
+        script:
+          - apt-get update
+          - apt-get install -y python-dev zip
+          - git describe --tags $(git rev-list --tags --max-count=1) >> version.txt
+          - curl -O https://bootstrap.pypa.io/get-pip.py
+          - python get-pip.py
+          - pip install boto3==1.3.0
+          - python aws_deploy/deploy_dev.py
