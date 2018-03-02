@@ -18,9 +18,10 @@ pipelines:
           - apt-get install -y python-dev
           - curl -O https://bootstrap.pypa.io/get-pip.py
           - python get-pip.py
+          - pip install boto3==1.3.0
           - pip install awscli
           - bash ./gradlew build
           - pwd
           - ls
           - cp build/distributions/* /tmp/artifact.zip # package up the application for deployment
-          - python upload_to_s3.py # run the deployment script  
+          - python upload_to_s3.py # run the deployment script
