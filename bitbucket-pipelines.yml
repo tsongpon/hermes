@@ -23,4 +23,5 @@ pipelines:
           - curl -O https://bootstrap.pypa.io/get-pip.py
           - python get-pip.py
           - pip install awscli
-          - aws deploy push --application-name $APPLICATION_NAME --s3-location s3://$S3_BUCKET/hermes_$BITBUCKET_BUILD_NUMBER --ignore-hidden-files
+          - cp /tmp/artifact.zip build/distributions/* # package up the application for deployment
+          - python upload_to_s3.py # run the deployment script
