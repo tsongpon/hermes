@@ -15,7 +15,7 @@ pipelines:
           # You must commit the Gradle wrapper to your repository
           # https://docs.gradle.org/current/userguide/gradle_wrapper.html
           - apt-get update
-          - apt-get install -y python-dev
+          - apt-get install -y python-dev zip unzip
           - curl -O https://bootstrap.pypa.io/get-pip.py
           - python get-pip.py
           - pip install boto3==1.3.0
