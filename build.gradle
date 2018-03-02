@@ -89,9 +89,9 @@ release {
     failOnUpdateNeeded = true
     revertOnFail = true
     preCommitText = ''
-    preTagCommitMessage = '[maven-release-plugin] prepare release '
-    tagCommitMessage = '[Gradle Release Plugin] - creating tag: '
-    newVersionCommitMessage = '[maven-release-plugin] prepare for next development iteration '
+    preTagCommitMessage = '[skip ci][maven-release-plugin] - pre tag commit: '
+    tagCommitMessage = '[skip ci][Gradle Release Plugin] - creating tag: '
+    newVersionCommitMessage = '[skip ci][Gradle Release Plugin] - new version commit: '
     tagTemplate = '${version}'
     versionPropertyFile = 'gradle.properties'
     versionProperties = []
