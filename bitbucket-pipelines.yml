@@ -16,6 +16,8 @@ pipelines:
           # https://docs.gradle.org/current/userguide/gradle_wrapper.html
           - apt-get update
           - apt-get install -y python-dev zip unzip
+          - git config --global user.email "deploy@vm-digital.asia"
+          - git config --global user.name "Deploy Vmd"
           - bash ./gradlew release -Prelease.useAutomaticVersion=true
           - git describe --tags $(git rev-list --tags --max-count=1) >> version.txt
           - zip -j /tmp/artifact.zip build/libs/* # package up the application for deployment
