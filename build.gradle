@@ -13,6 +13,7 @@ buildscript {
 		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
         classpath 'com.adarshr:gradle-test-logger-plugin:1.1.2'
 		classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.19.2')
+		classpath 'net.researchgate:gradle-release:2.6.0'
 	}
 }
 
@@ -23,6 +24,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.adarshr.test-logger'
 apply plugin: 'com.palantir.docker'
+apply plugin: 'net.researchgate.release'
 
 testlogger {
     theme 'standard' // pick a theme - mocha, standard or plain
