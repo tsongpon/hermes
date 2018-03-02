@@ -17,14 +17,10 @@ v1.0.0
 from __future__ import print_function
 import os
 import sys
-from time import strftime, sleep
 import boto3
 from botocore.exceptions import ClientError
 
-VERSION_LABEL = strftime("%Y%m%d%H%M%S")
-BUCKET_KEY = os.getenv('APPLICATION_NAME') + '/' + VERSION_LABEL + \
-    '-bitbucket_builds.zip'
-BUILD_NUMBER = os.getenv('BITBUCKET_BUILD_NUMBER')
+BASE_BUCKET_KEY = os.getenv('APPLICATION_NAME') + '/' + os.getenv('APPLICATION_NAME')
 
 def upload_to_s3(artifact):
     """
@@ -33,8 +29,8 @@ def upload_to_s3(artifact):
     with open('version.txt', 'r') as myfile:
         version_number=myfile.read().replace('\n', '')
     try:
-        print("Uploading hermes build number : ", BUILD_NUMBER)
-        print("Deploying hermes version : ", version_number)
+        bucket_key = BASE_BUCKET_KEY + '-' + version_number
+        print("Upload hermes version : ", bucket_key)
         client = boto3.client('s3')
     except ClientError as err:
         print("Failed to create boto3 client.\n" + str(err))
@@ -44,7 +40,7 @@ def upload_to_s3(artifact):
         client.put_object(
             Body=open(artifact, 'rb'),
             Bucket=os.getenv('S3_BUCKET'),
-            Key=BUCKET_KEY
+            Key=bucket_key
         )
     except ClientError as err:
         print("Failed to upload artifact to S3.\n" + str(err))
