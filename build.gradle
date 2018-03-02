@@ -1,3 +1,5 @@
+import java.util.regex.Matcher
+
 buildscript {
 	ext {
 		kotlinVersion = '1.2.20'
@@ -11,14 +13,10 @@ buildscript {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
 		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
-        classpath 'com.adarshr:gradle-test-logger-plugin:1.1.2'
+        classpath('com.adarshr:gradle-test-logger-plugin:1.1.2')
 		classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.19.2')
-        classpath('pl.allegro.tech.build:axion-release-plugin:1.8.1')
+        classpath 'net.researchgate:gradle-release:2.6.0'
 	}
-}
-
-plugins {
-    id 'pl.allegro.tech.build.axion-release' version '1.9.0'
 }
 
 apply plugin: 'kotlin'
@@ -28,7 +26,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.adarshr.test-logger'
 apply plugin: 'com.palantir.docker'
-apply plugin: 'pl.allegro.tech.build.axion-release'
+apply plugin: 'net.researchgate.release'
 
 testlogger {
     theme 'standard' // pick a theme - mocha, standard or plain
@@ -82,4 +80,35 @@ docker {
 	name "${project.group}/${jar.baseName}"
 	files jar.archivePath
 	buildArgs(['JAR_FILE': "${jar.archiveName}"])
+}
+
+release {
+    failOnCommitNeeded = true
+    failOnPublishNeeded = true
+    failOnSnapshotDependencies = true
+    failOnUnversionedFiles = true
+    failOnUpdateNeeded = true
+    revertOnFail = true
+    preCommitText = ''
+    preTagCommitMessage = '[Gradle Release Plugin] - pre tag commit: '
+    tagCommitMessage = '[Gradle Release Plugin] - creating tag: '
+    newVersionCommitMessage = '[Gradle Release Plugin] - new version commit: '
+    tagTemplate = '${version}'
+    versionPropertyFile = 'gradle.properties'
+    versionProperties = []
+    buildTasks = ['build']
+    versionPatterns = [
+            /(\d+)([^\d]*$)/: { Matcher m, Project p -> m.replaceAll("${(m[0][1] as int) + 1}${m[0][2]}") }
+    ]
+    scmAdapters = [
+            net.researchgate.release.GitAdapter,
+    ]
+
+    git {
+        requireBranch = 'master'
+        pushToRemote = 'origin'
+        pushToBranchPrefix = ''
+        commitVersionFileOnly = false
+        signTag = false
+    }
 }
