@@ -17,13 +17,9 @@ v1.0.0
 from __future__ import print_function
 import os
 import sys
-from time import strftime, sleep
 import boto3
 from botocore.exceptions import ClientError
 
-VERSION_LABEL = strftime("%Y%m%d%H%M%S")
-BUCKET_KEY = os.getenv('APPLICATION_NAME') + '/' + VERSION_LABEL + \
-             '-bitbucket_builds.zip'
 BASE_BUCKET_KEY = os.getenv('APPLICATION_NAME') + '/' + os.getenv('APPLICATION_NAME')
 
 def create_new_version():
@@ -66,37 +62,11 @@ def create_new_version():
         print(str(err))
         return False
 
-# def deploy_new_version():
-#     """
-#     Deploy a new version to AWS Elastic Beanstalk
-#     """
-#     try:
-#         client = boto3.client('elasticbeanstalk')
-#     except ClientError as err:
-#         print("Failed to create boto3 client.\n" + str(err))
-#         return False
-#
-#     try:
-#         response = client.update_environment(
-#             ApplicationName=os.getenv('APPLICATION_NAME'),
-#             EnvironmentName=os.getenv('APPLICATION_ENVIRONMENT'),
-#             VersionLabel=VERSION_LABEL,
-#         )
-#     except ClientError as err:
-#         print("Failed to update environment.\n" + str(err))
-#         return False
-#
-#     print(response)
-#     return True
 
 def main():
     " Your favorite wrapper's favorite wrapper "
     if not create_new_version():
         sys.exit(1)
-    # Wait for the new version to be consistent before deploying
-    # sleep(5)
-    # if not deploy_new_version():
-    #     sys.exit(1)
 
 if __name__ == "__main__":
     main()
