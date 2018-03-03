@@ -28,6 +28,7 @@ pipelines:
           - python aws_deploy/create_app_version.py
     - step:
         name: Deploy Dev
+        deployment: test
         script:
           - apt-get update
           - apt-get install -y python-dev zip
