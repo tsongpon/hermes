@@ -11,13 +11,13 @@ import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
+import java.lang.Thread.sleep
 
 
 @RunWith(SpringRunner::class)
@@ -107,6 +107,8 @@ class FriendPickApiIntegrationTest {
                 .then().statusCode(HttpStatus.SC_OK).log().body()
                 .extract().path<String>("id")
 
+        sleep(1000) //populate FriendPick work in separate thread, need to wait for process to finish
+
         RestAssured.`when`().get("friendpicks/v1/user/user01/friendpicks")
                 .then().statusCode(HttpStatus.SC_OK).log().body()
                 .and().body(JsonSchemaValidator.matchesJsonSchemaInClasspath(
@@ -118,7 +120,6 @@ class FriendPickApiIntegrationTest {
     }
 
     @Test
-    @Ignore
     fun testDelete() {
         val contractOwnerResponseUser02D = """
             {
@@ -180,6 +181,8 @@ class FriendPickApiIntegrationTest {
                 .`when`().post("saved/v1/user/user02d/saved")
                 .then().statusCode(HttpStatus.SC_OK).log().body()
                 .extract().path<String>("id")
+
+        sleep(1000) //populate FriendPick work in separate thread, need to wait for process to finish
 
         val id = RestAssured.`when`().get("friendpicks/v1/user/user01d/friendpicks")
                 .then().statusCode(HttpStatus.SC_OK).log().body().extract().path<String>("result[0].id")
@@ -309,10 +312,14 @@ class FriendPickApiIntegrationTest {
                 .then().statusCode(HttpStatus.SC_OK).log().body()
                 .extract().path<String>("id")
 
+        sleep(1000) //populate FriendPick work in separate thread, need to wait for process to finish
+
         RestAssured.given().contentType("application/json").body(requestJsonUserFp03)
                 .`when`().post("saved/v1/user/userFp03/saved")
                 .then().statusCode(HttpStatus.SC_OK).log().body()
                 .extract().path<String>("id")
+
+        sleep(1000) //populate FriendPick work in separate thread, need to wait for process to finish
 
         RestAssured.`when`().get("friendpicks/v1/user/userFp01/friendpicks")
                 .then().statusCode(HttpStatus.SC_OK).log().body()

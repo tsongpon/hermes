@@ -16,31 +16,22 @@ import org.springframework.test.context.junit4.SpringRunner
 import org.junit.After
 import com.jayway.restassured.module.jsv.JsonSchemaValidator
 import org.hamcrest.CoreMatchers.`is`
-import org.junit.Ignore
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-@Ignore("Can not run with friendpick integration test, Dont know wyh")
 class PlaceApiIntegrationTest {
 
     @Value("\${local.server.port}")
     var port: Int = 0
 
-//    var responseProvider: SimpleHttpResponseProvider? = null
-//    var server: MockHttpServer? = null
-
     @Before
     fun setUp() {
         RestAssured.port = port
-//        responseProvider = SimpleHttpResponseProvider()
-//        server = MockHttpServer(8180, responseProvider)
-//        server!!.start()
     }
 
     @After
     fun cleanUp() {
-//        server!!.stop()
     }
 
     @Test
