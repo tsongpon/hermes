@@ -23,6 +23,7 @@ class FriendPickTransportMapper {
                 transport.lat = friendPick.location!!.y
             }
 
+            transport.friends = transport.friends.sortedWith(compareByDescending{it.pickTime})
             return transport
         }
 

@@ -1,7 +1,10 @@
 server:
   port: 9002
+
+#spring:
+#  profiles: default
 hermes:
-  userServiceUrl: ${USER_SERVICE_URL:http://localhost:8080}
+  userServiceUrl: ${USER_SERVICE_URL:http://localhost:8180}
   userServiceAPIKey: ${USER_SERVICE_API_KEY:a6005e93-acfe-411b-8dbd-96a95e158e75}
 
 management:
@@ -15,6 +18,7 @@ spring:
   data:
     mongodb:
       host: ${MONGO_HOST:localhost}
+      port: 28017
       database: hermes
   jackson:
     property-naming-strategy: SNAKE_CASE

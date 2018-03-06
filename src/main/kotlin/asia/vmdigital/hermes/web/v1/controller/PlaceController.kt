@@ -57,7 +57,6 @@ class PlaceController @Autowired constructor(private val placeService: PlaceServ
     fun savePlace(@RequestBody transport: Mono<PlaceTransport>,
                   @PathVariable("userId") userId: String): Mono<ResponseEntity<PlaceTransport>> {
 
-        transport.map {  }
         return transport.flatMap({
             logger.debug("Getting request to save place {}", it)
             it.userId = userId
@@ -73,7 +72,7 @@ class PlaceController @Autowired constructor(private val placeService: PlaceServ
             if(deleted) {
                 ResponseEntity.ok().build<Void>()
             } else {
-                ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
+                ResponseEntity.status(HttpStatus.OK).build()
             }
         }
     }

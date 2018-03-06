@@ -55,17 +55,22 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
     compile('org.springframework.boot:spring-boot-starter-webflux')
 	compile('org.springframework.kafka:spring-kafka:2.1.2.RELEASE')
-	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	compile("org.jetbrains.kotlin:kotlin-reflect")
-    compile("com.fasterxml.jackson.module:jackson-module-kotlin")
+	compile('org.jetbrains.kotlin:kotlin-stdlib-jdk8')
+	compile('org.jetbrains.kotlin:kotlin-reflect')
+    compile('com.fasterxml.jackson.module:jackson-module-kotlin')
     compile('com.fasterxml.jackson.core:jackson-core')
     compile('com.fasterxml.jackson.core:jackson-databind')
     compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
-    compile("org.yaml:snakeyaml:1+")
+    compile('org.yaml:snakeyaml:1+')
 	runtime('org.springframework.boot:spring-boot-devtools')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('com.jayway.restassured:rest-assured:2.9.0')
-    testCompile "org.mockito:mockito-core:2.+"
+	testCompile('com.jayway.restassured:json-schema-validator:2.9.0')
+    testCompile('org.mockito:mockito-core:2.+')
+    testCompile("de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.3")
+    testCompile("com.github.kristofa:mock-http-server:4.1") {
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+    }
 }
 
 test {
@@ -74,6 +79,11 @@ test {
         events "PASSED", "STARTED", "FAILED", "SKIPPED"
     }
 }
+
+//task integrationTest(type: Test) {
+//    runWithMongoDb = true
+//}
+//
 
 docker {
 	name "${project.group}/${jar.baseName}"

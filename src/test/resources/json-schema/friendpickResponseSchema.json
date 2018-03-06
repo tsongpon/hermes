@@ -1,0 +1,185 @@
+{
+  "$id": "http://vm-digital.asia/friendpick-api",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "result": {
+      "$id": "/properties/result",
+      "type": "array",
+      "items": {
+        "$id": "/properties/result/items",
+        "type": "object",
+        "properties": {
+          "id": {
+            "$id": "/properties/result/items/properties/id",
+            "type": "string",
+            "title": "The Id Schema ",
+            "default": "",
+            "examples": [
+              "5e50348b-d3dd-442e-99d6-4ff9f7566da8"
+            ]
+          },
+          "user_id": {
+            "$id": "/properties/result/items/properties/user_id",
+            "type": "string",
+            "title": "The User_id Schema ",
+            "default": "",
+            "examples": [
+              "hermes-int-test02"
+            ]
+          },
+          "place_id": {
+            "$id": "/properties/result/items/properties/place_id",
+            "type": "string",
+            "title": "The Place_id Schema ",
+            "default": "",
+            "examples": [
+              "1e285b15-ec02-4870-80f8-b1fc4f8196q2"
+            ]
+          },
+          "type": {
+            "$id": "/properties/result/items/properties/type",
+            "type": "string",
+            "title": "The Type Schema ",
+            "default": "",
+            "examples": [
+              "Google"
+            ]
+          },
+          "categories": {
+            "$id": "/properties/result/items/properties/categories",
+            "type": "array",
+            "items": {
+              "$id": "/properties/result/items/properties/categories/items",
+              "type": "string",
+              "title": "The 0th Schema ",
+              "default": "",
+              "examples": [
+                "restaurant"
+              ]
+            }
+          },
+          "save_time": {
+            "$id": "/properties/result/items/properties/save_time",
+            "type": "integer",
+            "title": "The Save_time Schema ",
+            "default": 0,
+            "examples": [
+              1520238905069
+            ]
+          },
+          "create_time": {
+            "$id": "/properties/result/items/properties/create_time",
+            "type": "integer",
+            "title": "The Create_time Schema ",
+            "default": 0,
+            "examples": [
+              1520238905069
+            ]
+          },
+          "friends": {
+            "$id": "/properties/result/items/properties/friends",
+            "type": "array",
+            "items": {
+              "$id": "/properties/result/items/properties/friends/items",
+              "type": "object",
+              "properties": {
+                "friend_id": {
+                  "$id": "/properties/result/items/properties/friends/items/properties/friend_id",
+                  "type": "string",
+                  "title": "The Friend_id Schema ",
+                  "default": "",
+                  "examples": [
+                    "hermes-it-01"
+                  ]
+                },
+                "profile_name": {
+                  "$id": "/properties/result/items/properties/friends/items/properties/profile_name",
+                  "type": "string",
+                  "title": "The Profile_name Schema ",
+                  "default": "",
+                  "examples": [
+                    "hermes-it"
+                  ]
+                },
+                "profile_photo": {
+                  "$id": "/properties/result/items/properties/friends/items/properties/profile_photo",
+                  "type": "string",
+                  "title": "The Profile_photo Schema ",
+                  "default": null,
+                  "examples": [
+                    null
+                  ]
+                },
+                "pick_time": {
+                  "$id": "/properties/result/items/properties/friends/items/properties/pick_time",
+                  "type": "integer",
+                  "title": "The Pick_time Schema ",
+                  "default": 0,
+                  "examples": [
+                    1520238904387
+                  ]
+                }
+              }
+            }
+          },
+          "lon": {
+            "$id": "/properties/result/items/properties/lon",
+            "type": "number",
+            "title": "The Lon Schema ",
+            "default": 0,
+            "examples": [
+              100.45339965820312
+            ]
+          },
+          "lat": {
+            "$id": "/properties/result/items/properties/lat",
+            "type": "number",
+            "title": "The Lat Schema ",
+            "default": 0,
+            "examples": [
+              14.052499771118164
+            ]
+          }
+        }
+      }
+    },
+    "next": {
+      "$id": "/properties/next",
+      "type": "null",
+      "title": "The Next Schema ",
+      "default": null,
+      "examples": [
+        null
+      ]
+    },
+    "previous": {
+      "$id": "/properties/previous",
+      "type": "null",
+      "title": "The Previous Schema ",
+      "default": null,
+      "examples": [
+        null
+      ]
+    },
+    "first": {
+      "$id": "/properties/first",
+      "type": "string",
+      "title": "The First Schema ",
+      "default": "",
+      "examples": [
+        "/friendpicks/v1/user/hermes-int-test02/friendpicks?page=1&size=30"
+      ]
+    },
+    "last": {
+      "$id": "/properties/last",
+      "type": "string",
+      "title": "The Last Schema ",
+      "default": "",
+      "examples": [
+        "/friendpicks/v1/user/hermes-int-test02/friendpicks?page=1&size=30"
+      ]
+    }
+  }
+}

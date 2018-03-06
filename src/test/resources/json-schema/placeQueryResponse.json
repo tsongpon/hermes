@@ -1,0 +1,139 @@
+{
+  "$id": "http://vm-digital.asia/place-query-api",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "result": {
+      "$id": "/properties/result",
+      "type": "array",
+      "items": {
+        "$id": "/properties/result/items",
+        "type": "object",
+        "properties": {
+          "id": {
+            "$id": "/properties/result/items/properties/id",
+            "type": "string",
+            "title": "The Id Schema ",
+            "default": "",
+            "examples": [
+              "add6c57e-9a6d-44d3-96c2-ce2197bddcc5"
+            ]
+          },
+          "user_id": {
+            "$id": "/properties/result/items/properties/user_id",
+            "type": "string",
+            "title": "The User_id Schema ",
+            "default": "",
+            "examples": [
+              "hermes-int-test99"
+            ]
+          },
+          "place_id": {
+            "$id": "/properties/result/items/properties/place_id",
+            "type": "string",
+            "title": "The Place_id Schema ",
+            "default": "",
+            "examples": [
+              "place-1"
+            ]
+          },
+          "type": {
+            "$id": "/properties/result/items/properties/type",
+            "type": "string",
+            "title": "The Type Schema ",
+            "default": "",
+            "examples": [
+              "Google"
+            ]
+          },
+          "categories": {
+            "$id": "/properties/result/items/properties/categories",
+            "type": "array",
+            "items": {
+              "$id": "/properties/result/items/properties/categories/items",
+              "type": "string",
+              "title": "The 0th Schema ",
+              "default": "",
+              "examples": [
+                "restaurant"
+              ]
+            }
+          },
+          "create_at": {
+            "$id": "/properties/result/items/properties/create_at",
+            "type": "integer",
+            "title": "The Create_at Schema ",
+            "default": 0,
+            "examples": [
+              1520238661959
+            ]
+          },
+          "update_at": {
+            "$id": "/properties/result/items/properties/update_at",
+            "type": "integer",
+            "title": "The Update_at Schema ",
+            "default": 0,
+            "examples": [
+              1520238661959
+            ]
+          },
+          "lon": {
+            "$id": "/properties/result/items/properties/lon",
+            "type": "number",
+            "title": "The Lon Schema ",
+            "default": 0,
+            "examples": [
+              111.45339965820312
+            ]
+          },
+          "lat": {
+            "$id": "/properties/result/items/properties/lat",
+            "type": "number",
+            "title": "The Lat Schema ",
+            "default": 0,
+            "examples": [
+              34.0525016784668
+            ]
+          }
+        }
+      }
+    },
+    "next": {
+      "$id": "/properties/next",
+      "type": "null",
+      "title": "The Next Schema ",
+      "default": null,
+      "examples": [
+        null
+      ]
+    },
+    "previous": {
+      "$id": "/properties/previous",
+      "type": "null",
+      "title": "The Previous Schema ",
+      "default": null,
+      "examples": [
+        null
+      ]
+    },
+    "first": {
+      "$id": "/properties/first",
+      "type": "string",
+      "title": "The First Schema ",
+      "default": "",
+      "examples": [
+        "/saved/v1/user/hermes-int-test99/saved?page=1&size=30"
+      ]
+    },
+    "last": {
+      "$id": "/properties/last",
+      "type": "string",
+      "title": "The Last Schema ",
+      "default": "",
+      "examples": [
+        "/saved/v1/user/hermes-int-test99/saved?page=1&size=30"
+      ]
+    }
+  }
+}

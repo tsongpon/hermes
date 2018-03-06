@@ -54,9 +54,8 @@ class UserRepositoryImpl(private val mongo: ReactiveMongoTemplate): UserReposito
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build()
 
-        logger.debug("Getting user data id {}", userId)
         val userFromRemote = webClient.get().uri("/accounts/v1/users/$userId")
-                .retrieve().bodyToMono(UserTransport::class.java).log("Getting user $userId from remote")
+                .retrieve().bodyToMono(UserTransport::class.java)
 
         logger.debug("Getting user contact user id {}", userId)
         val followersFromRemote = webClient.get().uri("/accounts/v1/users/$userId/contactowners")
