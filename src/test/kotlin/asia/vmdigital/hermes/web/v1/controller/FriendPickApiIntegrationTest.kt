@@ -11,6 +11,7 @@ import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Value
@@ -117,6 +118,7 @@ class FriendPickApiIntegrationTest {
     }
 
     @Test
+    @Ignore
     fun testDelete() {
         val contractOwnerResponseUser02D = """
             {
