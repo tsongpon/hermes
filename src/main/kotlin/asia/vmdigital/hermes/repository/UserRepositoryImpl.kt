@@ -51,7 +51,6 @@ class UserRepositoryImpl(private val mongo: ReactiveMongoTemplate): UserReposito
 
         val webClient = WebClient.builder().baseUrl(userServiceApi)
                 .defaultHeader("Authorization", authorizationValue)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build()
 
         val userFromRemote = webClient.get().uri("/accounts/v1/users/$userId")

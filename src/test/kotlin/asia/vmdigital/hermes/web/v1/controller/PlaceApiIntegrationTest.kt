@@ -17,14 +17,10 @@ import org.junit.After
 import com.jayway.restassured.module.jsv.JsonSchemaValidator
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Ignore
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.test.annotation.DirtiesContext
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @Ignore("Can not run with friendpick integration test, Dont know wyh")
 class PlaceApiIntegrationTest {
 
