@@ -16,10 +16,12 @@ import org.springframework.test.context.junit4.SpringRunner
 import org.junit.After
 import com.jayway.restassured.module.jsv.JsonSchemaValidator
 import org.hamcrest.CoreMatchers.`is`
+import org.springframework.test.annotation.DirtiesContext
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class PlaceApiIntegrationTest {
 
     @Value("\${local.server.port}")
