@@ -109,7 +109,7 @@ class FriendPickApiIntegrationTest {
                 .then().statusCode(HttpStatus.SC_OK).log().body()
                 .extract().path<String>("id")
 
-        sleep(1000) //populate FriendPick work in separate thread, need to wait for process to finish
+        sleep(500) //populate FriendPick work in separate thread, need to wait for process to finish
 
         RestAssured.`when`().get("friendpicks/v1/user/user01/friendpicks")
                 .then().statusCode(HttpStatus.SC_OK).log().body()
@@ -184,7 +184,7 @@ class FriendPickApiIntegrationTest {
                 .then().statusCode(HttpStatus.SC_OK).log().body()
                 .extract().path<String>("id")
 
-        sleep(1000) //populate FriendPick work in separate thread, need to wait for process to finish
+        sleep(500) //populate FriendPick work in separate thread, need to wait for process to finish
 
         val id = RestAssured.`when`().get("friendpicks/v1/user/user01d/friendpicks")
                 .then().statusCode(HttpStatus.SC_OK).log().body().extract().path<String>("result[0].id")
@@ -314,14 +314,14 @@ class FriendPickApiIntegrationTest {
                 .then().statusCode(HttpStatus.SC_OK).log().body()
                 .extract().path<String>("id")
 
-        sleep(1000) //populate FriendPick work in separate thread, need to wait for process to finish
+        sleep(500) //populate FriendPick work in separate thread, need to wait for process to finish
 
         RestAssured.given().contentType("application/json").body(requestJsonUserFp03)
                 .`when`().post("saved/v1/user/userFp03/saved")
                 .then().statusCode(HttpStatus.SC_OK).log().body()
                 .extract().path<String>("id")
 
-        sleep(1000) //populate FriendPick work in separate thread, need to wait for process to finish
+        sleep(500) //populate FriendPick work in separate thread, need to wait for process to finish
 
         RestAssured.`when`().get("friendpicks/v1/user/userFp01/friendpicks")
                 .then().statusCode(HttpStatus.SC_OK).log().body()
@@ -398,7 +398,7 @@ class FriendPickApiIntegrationTest {
                 .then().statusCode(HttpStatus.SC_OK).log().body()
                 .extract().path<String>("id")
 
-        sleep(1000) //populate FriendPick work in separate thread, need to wait for process to finish
+        sleep(500) //populate FriendPick work in separate thread, need to wait for process to finish
 
         `when`().delete("saved/v1/user/user02/saved/$placeSavedId").then().statusCode(HttpStatus.SC_OK)
 
@@ -526,14 +526,14 @@ class FriendPickApiIntegrationTest {
                 .then().statusCode(HttpStatus.SC_OK).log().body()
                 .extract().path<String>("id")
 
-        sleep(1000) //populate FriendPick work in separate thread, need to wait for process to finish
+        sleep(500) //populate FriendPick work in separate thread, need to wait for process to finish
 
         RestAssured.given().contentType("application/json").body(requestJsonUserFp03)
                 .`when`().post("saved/v1/user/userFp03/saved")
                 .then().statusCode(HttpStatus.SC_OK).log().body()
                 .extract().path<String>("id")
 
-        sleep(1000) //populate FriendPick work in separate thread, need to wait for process to finish
+        sleep(500) //populate FriendPick work in separate thread, need to wait for process to finish
 
         `when`().delete("saved/v1/user/user02/saved/$userFp02SavedId").then().statusCode(HttpStatus.SC_OK)
 
