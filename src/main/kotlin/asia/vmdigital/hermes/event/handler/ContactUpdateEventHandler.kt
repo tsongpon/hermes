@@ -31,11 +31,16 @@ class ContactUpdateEventHandler(private val userRepository: UserRepository,
         try {
             val userContactUpdate = mapper.readValue(transport, UserContactUpdate::class.java)
             logger.debug("Got message from kafka {}", userContactUpdate)
-            synchronizeUser(userContactUpdate.userId!!)
             val event = userContactUpdate.event
             when(event) {
-                Event.CONTACT_ADDED.eventName -> handleContactAdded(userContactUpdate)
-                Event.CONTACT_REMOVED.eventName -> handleContactRemoved(userContactUpdate)
+                Event.CONTACT_ADDED.eventName -> {
+                    synchronizeUser(userContactUpdate.userToBeAdded!!)
+                    handleContactAdded(userContactUpdate)
+                }
+                Event.CONTACT_REMOVED.eventName -> {
+                    synchronizeUser(userContactUpdate.userToBeRemoved!!)
+                    handleContactRemoved(userContactUpdate)
+                }
                 else -> logger.warn("Unrecognized event detected!!, event name {}", event)
             }
         } catch (e: JsonProcessingException) {

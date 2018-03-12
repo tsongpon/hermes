@@ -21,6 +21,9 @@ class KafkaConfig {
     @Value("\${kafka.bootstrap-servers}")
     private val bootstrapServers: String? = null
 
+    @Value("\${kafka.consumer-group}")
+    private val consumerGroup: String? = null
+
     @Bean
     fun consumerConfigs(): Map<String, Any> {
         val props = HashMap<String, Any>()
@@ -28,7 +31,7 @@ class KafkaConfig {
         props[ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
         props[ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
         props[JsonSerializer.ADD_TYPE_INFO_HEADERS] = false
-        props[ConsumerConfig.GROUP_ID_CONFIG] = "hermes-consumer"
+        props[ConsumerConfig.GROUP_ID_CONFIG] = consumerGroup!!
         props[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "earliest"
 
         return props

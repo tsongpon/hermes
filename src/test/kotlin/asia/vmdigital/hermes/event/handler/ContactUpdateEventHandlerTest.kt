@@ -34,8 +34,8 @@ class ContactUpdateEventHandlerTest {
         val returnedUser = User(id = "1300", followers = arrayListOf(
                 Follower("fl-1", "profile-1", "photo1")))
 
-        `when`(mockUserRepository.deleteUser("1300")).thenReturn(Mono.just(true))
-        `when`(mockUserRepository.getUser("1300")).thenReturn(Mono.just(returnedUser))
+        `when`(mockUserRepository.deleteUser("1212312121")).thenReturn(Mono.just(true))
+        `when`(mockUserRepository.getUser("1212312121")).thenReturn(Mono.just(returnedUser))
 
         val yesterday = LocalDateTime.now().minusDays(1)
         val returnedPlaces = Place(userId = "1212312121", placeId = "place-1", updateTime = yesterday)
@@ -51,8 +51,8 @@ class ContactUpdateEventHandlerTest {
             """
         contactUpdateEventHandler.handleUserContactUpdate(eventPayload)
 
-        verify(mockUserRepository, times(1)).deleteUser("1300")
-        verify(mockUserRepository, times(1)).getUser("1300")
+        verify(mockUserRepository, times(1)).deleteUser("1212312121")
+        verify(mockUserRepository, times(1)).getUser("1212312121")
         verify(mockPlaceService, times(1)).listPlaces(placeQuery)
         verify(mockFriendPickService, times(1)).populateFriendPickForSpecificUser(
                 "1212312121", returnedPlaces, "1300")
@@ -63,8 +63,8 @@ class ContactUpdateEventHandlerTest {
         val returnedUser = User(id = "1300", followers = arrayListOf(
                 Follower("fl-1", "profile-1", "photo1")))
 
-        `when`(mockUserRepository.deleteUser("1300")).thenReturn(Mono.just(true))
-        `when`(mockUserRepository.getUser("1300")).thenReturn(Mono.just(returnedUser))
+        `when`(mockUserRepository.deleteUser("1212312121")).thenReturn(Mono.just(true))
+        `when`(mockUserRepository.getUser("1212312121")).thenReturn(Mono.just(returnedUser))
 
         val yesterday = LocalDateTime.now().minusDays(1)
         val returnedPlaces = Place(userId = "1212312121", placeId = "place-1", updateTime = yesterday)
@@ -80,8 +80,8 @@ class ContactUpdateEventHandlerTest {
             """
         contactUpdateEventHandler.handleUserContactUpdate(eventPayload)
 
-        verify(mockUserRepository, times(1)).deleteUser("1300")
-        verify(mockUserRepository, times(1)).getUser("1300")
+        verify(mockUserRepository, times(1)).deleteUser("1212312121")
+        verify(mockUserRepository, times(1)).getUser("1212312121")
         verify(mockPlaceService, times(1)).listPlaces(placeQuery)
         verify(mockFriendPickService, times(1)).unPopulateFriendPick(
                 "1212312121", "place-1")

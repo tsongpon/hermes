@@ -23,5 +23,6 @@ spring:
 
 kafka:
   bootstrap-servers: ${KAFKA_SERVER:localhost:9092}
+  consumer-group: hermes-consumer-local
   topic:
     userServiceContactUpdate: userServiceContactUpdate
