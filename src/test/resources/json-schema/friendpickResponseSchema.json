@@ -29,10 +29,10 @@
               "hermes-int-test02"
             ]
           },
-          "place_id": {
-            "$id": "/properties/result/items/properties/place_id",
+          "saved_id": {
+            "$id": "/properties/result/items/properties/saved_id",
             "type": "string",
-            "title": "The Place_id Schema ",
+            "title": "The Saved_id Schema ",
             "default": "",
             "examples": [
               "1e285b15-ec02-4870-80f8-b1fc4f8196q2"

@@ -46,7 +46,7 @@ class PlaceApiIntegrationTest {
         val requestJson = """
             {
 	            "user_id": "place-user-01",
-                "place_id": "1e285b15-ec02-4870-80f8-b1fc4f8196q2",
+                "saved_id": "1e285b15-ec02-4870-80f8-b1fc4f8196q2",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 100.4534,
@@ -58,7 +58,7 @@ class PlaceApiIntegrationTest {
                 .then().statusCode(HttpStatus.SC_OK).log().body()
                 .and().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("json-schema/placeResponseSchema.json"))
                 .and().body("user_id", equalTo("hermes-int-test01"))
-                .and().body("place_id", equalTo("1e285b15-ec02-4870-80f8-b1fc4f8196q2"))
+                .and().body("saved_id", equalTo("1e285b15-ec02-4870-80f8-b1fc4f8196q2"))
                 .and().body("categories", hasItem("restaurant"))
                 .extract().path<String>("id")
 
@@ -66,7 +66,7 @@ class PlaceApiIntegrationTest {
                 .then().statusCode(HttpStatus.SC_OK).and().body("id", equalTo(placeId))
                 .and().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("json-schema/placeResponseSchema.json"))
                 .and().body("user_id", equalTo("hermes-int-test01"))
-                .and().body("place_id", equalTo("1e285b15-ec02-4870-80f8-b1fc4f8196q2"))
+                .and().body("saved_id", equalTo("1e285b15-ec02-4870-80f8-b1fc4f8196q2"))
                 .and().body("categories", hasItem("restaurant"))
 
     }
@@ -82,7 +82,7 @@ class PlaceApiIntegrationTest {
         val requestJson = """
             {
 	            "user_id": "hermes-int-test01",
-                "place_id": "1e285b15-ec02-4870-80f8-b1fc4f8196q2",
+                "saved_id": "1e285b15-ec02-4870-80f8-b1fc4f8196q2",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 100.4534,
@@ -98,7 +98,7 @@ class PlaceApiIntegrationTest {
                 .then().statusCode(HttpStatus.SC_OK).and().body("id", equalTo(placeId))
                 .and().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("json-schema/placeResponseSchema.json"))
                 .and().body("user_id", equalTo("hermes-int-test01"))
-                .and().body("place_id", equalTo("1e285b15-ec02-4870-80f8-b1fc4f8196q2"))
+                .and().body("saved_id", equalTo("1e285b15-ec02-4870-80f8-b1fc4f8196q2"))
                 .and().body("categories", hasItem("restaurant"))
     }
 
@@ -107,7 +107,7 @@ class PlaceApiIntegrationTest {
         val requestJsonPlace1 = """
             {
 	            "user_id": "hermes-int-test99",
-                "place_id": "place-1",
+                "saved_id": "place-1",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 111.4534,
@@ -118,7 +118,7 @@ class PlaceApiIntegrationTest {
         val requestJsonPlace2 = """
             {
 	            "user_id": "hermes-int-test99",
-                "place_id": "place-2",
+                "saved_id": "place-2",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 100.4534,
@@ -129,7 +129,7 @@ class PlaceApiIntegrationTest {
         val requestJsonAnotherUser = """
             {
 	            "user_id": "another-user",
-                "place_id": "place-2",
+                "saved_id": "place-2",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 100.4534,
@@ -165,7 +165,7 @@ class PlaceApiIntegrationTest {
         val requestJson = """
             {
 	            "user_id": "hermes",
-                "place_id": "1e285b15-ec02-4870-80f8",
+                "saved_id": "1e285b15-ec02-4870-80f8",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 111.4534,

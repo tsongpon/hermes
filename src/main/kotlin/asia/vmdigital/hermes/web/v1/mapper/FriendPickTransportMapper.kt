@@ -12,7 +12,7 @@ class FriendPickTransportMapper {
             val transport = FriendPickTransport()
             transport.id = friendPick.id
             transport.userId = friendPick.userId
-            transport.placeId = friendPick.placeId
+            transport.savedId = friendPick.placeId
             transport.type = friendPick.source
             transport.categories = friendPick.categories
             transport.createTime = Utils.localDateTimeToDate(friendPick.createTime)

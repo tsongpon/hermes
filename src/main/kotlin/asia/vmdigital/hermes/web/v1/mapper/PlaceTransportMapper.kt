@@ -11,7 +11,7 @@ class PlaceTransportMapper {
             val transport = PlaceTransport()
             transport.id = place.id
             transport.userId = place.userId
-            transport.placeId = place.placeId
+            transport.savedId = place.placeId
             transport.type = place.type
             transport.categories = place.categories
             transport.createAt = Utils.localDateTimeToDate(place.createTime)
@@ -28,7 +28,7 @@ class PlaceTransportMapper {
             val place = Place()
             place.id = transport.id
             place.userId = transport.userId
-            place.placeId = transport.placeId
+            place.placeId = transport.savedId
             place.type = transport.type
             place.categories = transport.categories
             place.createTime  = Utils.dateToLocalDateTime(transport.createAt)

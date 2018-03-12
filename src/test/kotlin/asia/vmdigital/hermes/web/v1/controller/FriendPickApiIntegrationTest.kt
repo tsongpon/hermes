@@ -95,7 +95,7 @@ class FriendPickApiIntegrationTest {
         val requestJson = """
             {
 	            "user_id": "user02",
-                "place_id": "user02-place-01",
+                "saved_id": "user02-place-01",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 100.4534,
@@ -115,7 +115,7 @@ class FriendPickApiIntegrationTest {
                 .and().body(JsonSchemaValidator.matchesJsonSchemaInClasspath(
                         "json-schema/friendpickResponseSchema.json"))
                 .and().body("result[0].user_id", equalTo("user01"))
-                .and().body("result[0].place_id", equalTo("user02-place-01"))
+                .and().body("result[0].saved_id", equalTo("user02-place-01"))
                 .and().body("result[0].type", equalTo("Google"))
                 .and().body("result[0].friends[0].friend_id", equalTo("user02"))
     }
@@ -170,7 +170,7 @@ class FriendPickApiIntegrationTest {
         val requestJson = """
             {
 	            "user_id": "user02d",
-                "place_id": "user02-place-01d",
+                "saved_id": "user02-place-01d",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 10.4534,
@@ -289,7 +289,7 @@ class FriendPickApiIntegrationTest {
         val requestJsonUserFp02 = """
             {
 	            "user_id": "userFp02",
-                "place_id": "fp02-a-cool-place",
+                "saved_id": "fp02-a-cool-place",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 101.4534,
@@ -300,7 +300,7 @@ class FriendPickApiIntegrationTest {
         val requestJsonUserFp03 = """
             {
 	            "user_id": "userFp02",
-                "place_id": "fp02-a-cool-place",
+                "saved_id": "fp02-a-cool-place",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 101.4534,
@@ -327,7 +327,7 @@ class FriendPickApiIntegrationTest {
                 .and().body(JsonSchemaValidator.matchesJsonSchemaInClasspath(
                         "json-schema/friendpickResponseSchema.json"))
                 .and().body("result[0].user_id", equalTo("userFp01"))
-                .and().body("result[0].place_id", equalTo("fp02-a-cool-place"))
+                .and().body("result[0].saved_id", equalTo("fp02-a-cool-place"))
                 .and().body("result[0].type", equalTo("Google"))
                 .and().body("result[0].friends.size()", CoreMatchers.`is`(2))
                 .and().body("result[0].friends[0].friend_id", equalTo("userFp03")) //save after come first
@@ -384,7 +384,7 @@ class FriendPickApiIntegrationTest {
         val requestJson = """
             {
 	            "user_id": "user02",
-                "place_id": "user02-place-01",
+                "saved_id": "user02-place-01",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 100.4534,
@@ -501,7 +501,7 @@ class FriendPickApiIntegrationTest {
         val requestJsonUserFp02 = """
             {
 	            "user_id": "userFp02",
-                "place_id": "fp02-a-cool-place",
+                "saved_id": "fp02-a-cool-place",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 101.4534,
@@ -512,7 +512,7 @@ class FriendPickApiIntegrationTest {
         val requestJsonUserFp03 = """
             {
 	            "user_id": "userFp02",
-                "place_id": "fp02-a-cool-place",
+                "saved_id": "fp02-a-cool-place",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 101.4534,
@@ -638,7 +638,7 @@ class FriendPickApiIntegrationTest {
         val requestJsonUserFp02 = """
             {
 	            "user_id": "userFp02",
-                "place_id": "fp02-a-cool-place",
+                "saved_id": "fp02-a-cool-place",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 101.4534,
@@ -649,7 +649,7 @@ class FriendPickApiIntegrationTest {
         val requestJsonUserFp03 = """
             {
 	            "user_id": "userFp02",
-                "place_id": "fp02-a-cool-place",
+                "saved_id": "fp02-a-cool-place",
 	            "type": "Google",
 	            "categories": ["restaurant"],
 	            "lon": 101.4534,
@@ -676,7 +676,7 @@ class FriendPickApiIntegrationTest {
                 .and().body(JsonSchemaValidator.matchesJsonSchemaInClasspath(
                         "json-schema/friendpickResponseSchema.json"))
                 .and().body("result[0].user_id", equalTo("userFp01"))
-                .and().body("result[0].place_id", equalTo("fp02-a-cool-place"))
+                .and().body("result[0].saved_id", equalTo("fp02-a-cool-place"))
                 .and().body("result[0].type", equalTo("Google"))
                 .and().body("result[0].friends.size()", CoreMatchers.`is`(2))
                 .and().body("result[0].friends[0].friend_id", equalTo("userFp03")) //save after come first
@@ -695,7 +695,7 @@ class FriendPickApiIntegrationTest {
                 .and().body(JsonSchemaValidator.matchesJsonSchemaInClasspath(
                         "json-schema/friendpickResponseSchema.json"))
                 .and().body("result[0].user_id", equalTo("userFp01"))
-                .and().body("result[0].place_id", equalTo("fp02-a-cool-place"))
+                .and().body("result[0].saved_id", equalTo("fp02-a-cool-place"))
                 .and().body("result[0].type", equalTo("Google"))
                 .and().body("result[0].friends.size()", CoreMatchers.`is`(2))
                 .and().body("result[0].friends[0].friend_id", equalTo("userFp02")) //save after come first

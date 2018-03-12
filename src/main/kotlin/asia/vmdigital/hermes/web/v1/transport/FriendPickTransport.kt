@@ -6,7 +6,7 @@ import kotlin.collections.ArrayList
 data class FriendPickTransport(
         var id: String? = null,
         var userId: String? = null,
-        var placeId: String? = null,
+        var savedId: String? = null,
         var type: String? = null,
         var categories: ArrayList<String> = ArrayList(),
         var saveTime: Date? = null,
