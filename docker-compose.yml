@@ -16,35 +16,35 @@ services:
         - ./data/db:/data/db
       ports:
         - 27017:27017
-  userservice-db:
-      image:  library/postgres:9.6
-      container_name: "userservice-db"
-      ports:
-        - 5432:5432
-      volumes:
-        - ./postgres-data:/var/lib/postgresql/data
-      environment:
-        - POSTGRES_DB=userdb
-        - POSTGRES_USER=userdb
-        - POSTGRES_PASSWORD=pingu123
-  userservice:
-      image: asia.vmdigital/user-service:latest
-      mem_limit: 512m
-      ports:
-        - 8080:8080
-      links:
-        - "userservice-db:userservice-db"
-        - "kafkaserver:kafkaserver"
-      environment:
-        - KAFKA_SERVER=kafkaserver:9092
-        - USERSERVICE_DB_URL=jdbc:postgresql://userservice-db:5432/userdb
-        - USERSERVICE_DB_USER=userdb
-        - USERSERVICE_DB_PASSWORD=pingu123
-        - AWS_ACCESS_KEY_ID=AKIAJEMJXXEEZ75CFVIA
-        - AWS_SECRET_KEY=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
-        - AWS_SECRET_ACCESS_KEY=dO1Opav7+bpjIbcCODjAHtgY5Y0ivBH7ooYoZRYa
-        - OMISE_SECRET_KEY=skey_test_58at54w8flecpqw6b8f
-        - OMISE_PUBLIC_KEY=pkey_test_58gqaal76a0utakgjlf
+#  userservice-db:
+#      image:  library/postgres:9.6
+#      container_name: "userservice-db"
+#      ports:
+#        - 5432:5432
+#      volumes:
+#        - ./postgres-data:/var/lib/postgresql/data
+#      environment:
+#        - POSTGRES_DB=userdb
+#        - POSTGRES_USER=userdb
+#        - POSTGRES_PASSWORD=pingu123
+#  userservice:
+#      image: asia.vmdigital/user-service:latest
+#      mem_limit: 512m
+#      ports:
+#        - 8080:8080
+#      links:
+#        - "userservice-db:userservice-db"
+#        - "kafkaserver:kafkaserver"
+#      environment:
+#        - KAFKA_SERVER=kafkaserver:9092
+#        - USERSERVICE_DB_URL=jdbc:postgresql://userservice-db:5432/userdb
+#        - USERSERVICE_DB_USER=userdb
+#        - USERSERVICE_DB_PASSWORD=pingu123
+#        - AWS_ACCESS_KEY_ID=AKIAJEMJXXEEZ75CFVIA
+#        - AWS_SECRET_KEY=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
+#        - AWS_SECRET_ACCESS_KEY=dO1Opav7+bpjIbcCODjAHtgY5Y0ivBH7ooYoZRYa
+#        - OMISE_SECRET_KEY=skey_test_58at54w8flecpqw6b8f
+#        - OMISE_PUBLIC_KEY=pkey_test_58gqaal76a0utakgjlf
   hermes:
       image: asia.vmdigital/hermes:latest
       mem_limit: 512m
@@ -53,8 +53,6 @@ services:
       links:
         - "hermes-db:hermes-db"
         - "kafkaserver:kafkaserver"
-        - "userservice:userservice"
       environment:
         - KAFKA_SERVER=kafkaserver:9092
-        - USER_SERVICE_URL=http://userservice:8080
         - MONGO_HOST=hermes-db

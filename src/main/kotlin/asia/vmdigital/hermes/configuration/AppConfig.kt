@@ -7,5 +7,5 @@ import org.springframework.scheduling.annotation.EnableAsync
 @Configuration
 @EnableReactiveMongoRepositories
 @EnableAsync
-class AppConfig {
+open class AppConfig {
 }

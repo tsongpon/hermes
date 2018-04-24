@@ -55,7 +55,7 @@ class PlaceApiIntegrationTest {
         """.trimIndent()
         val placeId = given().contentType("application/json").body(requestJson)
                 .`when`().post("saved/v1/user/hermes-int-test01/saved")
-                .then().statusCode(HttpStatus.SC_OK).log().body()
+                .then().statusCode(HttpStatus.SC_OK)
                 .and().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("json-schema/placeResponseSchema.json"))
                 .and().body("user_id", equalTo("hermes-int-test01"))
                 .and().body("saved_id", equalTo("1e285b15-ec02-4870-80f8-b1fc4f8196q2"))
