@@ -1,13 +1,5 @@
 # Hermes
-Place and user's favorite place API.
-
-Responsible for:
-
- - store user's favorite places.
- - store place's detail, name, location, category.
- - answer question "What are the places that my friends went to"
-
-![enter image description here](https://bitbucket.org/vmdigital/hermes/raw/master/diagram/VMD%20Architecture.png)
+Reactive API powered by SpringBoot2 and Kotlin
 
 **Requirements**
 
